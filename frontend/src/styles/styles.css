@@ -5,10 +5,9 @@ body {
 }
 
 .sidebar {
-    margin-left: 10px;
     width: 250px;
     height: 100vh;
-    background: white;
+    background: rgb(220, 218, 218);
     color: black;
     position: fixed;
 }
@@ -20,13 +19,9 @@ main {
 }
 
 .sidebar-nav a {
+    margin-left: 10px;
     display: block;
     color: black;
     padding: 5px;
     text-decoration: none;
-}
-
-.sidebar-nav a:hover {
-    background: #34495e;
-    border-radius: 12px;
 }
