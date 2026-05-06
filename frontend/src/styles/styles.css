@@ -8,7 +8,7 @@ body {
     width: 250px;
     height: 100vh;
     background: rgb(220, 218, 218);
-    color: black;
+    color: rgb(53, 51, 51);
     position: fixed;
 }
 
@@ -21,7 +21,14 @@ main {
 .sidebar-nav a {
     margin-left: 10px;
     display: block;
+    margin-bottom: 10px;
     color: black;
     padding: 5px;
     text-decoration: none;
+}
+
+.sidebar a:hover {
+    border-radius: 7px;
+    background-color: #8b8891;
+    margin-right: 10px;
 }
