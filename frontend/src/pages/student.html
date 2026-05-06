@@ -5,8 +5,40 @@
     <title>Student Portal</title>
 </head>
 <body>
-    <nav>
-        
-    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>Student Portal</h1>
+        </div>
+        <div class="sidebar-content">
+            <nav class="sidebar-nav">
+                <a href="#" data-section="dashboard">Dashboard</a>
+                <a href="#" data-section="subjects">Subjects</a>
+                <a href="#" data-section="assignments">Assignments</a>
+                <a href="#" data-section="grades">Grades</a>   
+                <a href="#" data-section="inbox">Inbox</a>         
+            </nav>
+        </div>
+        <div class="sidebar-footer">
+            
+        </div>
+    </aside>
+    <main>
+        <section id="section-dashboard" class="section" style="display: none;">
+            <h1>Dashboard</h1>
+        </section>
+        <section id="section-subjects" class="section" style="display: none;">
+            <h1>Subjects</h1>
+        </section>
+        <section id="section-assignments" class="section" style="display: none;">
+            <h1>Assignments</h1>
+        </section>
+        <section id="section-grades" class="section" style="display: none;">
+            <h1>Grades</h1>
+        </section>
+        <section id="section-inbox" class="section" style="display: none;">
+            <h1>Inbox</h1>
+        </section>        
+    </main>
 </body>
+<script src="../components/dashboard.js"></script>
 </html>
