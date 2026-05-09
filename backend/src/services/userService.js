@@ -106,7 +106,7 @@ async function deleteUser(id) {
     const user = await userModel.findById(id);
     if (!user) throw new Error('User not found');
 
-    const deletedUser = await userModel.delete(id);
+    const deletedUser = await userModel.remove(id);
 
     return userDto(deletedUser);
 }

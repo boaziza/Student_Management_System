@@ -1,40 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="../styles/styles.css">
-    <title>Parent Portal</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parent Portal</title>
+  <link rel="stylesheet" href="../styles/styles.css"/>
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <h1>Parent Portal</h1>
-        </div>
-        <div class="sidebar-content">
-            <nav class="sidebar-nav">
-                <a href="#" data-section="dashboard">Dashboard</a>
-                <a href="#" data-section="academic-progress">Academic Progress</a>
-                <a href="#" data-section="fees">Fees</a>
-                <a href="#" data-section="inbox">Inbox</a>          
-            </nav>
-        </div>
-        <div class="sidebar-footer">
 
+<header class="topbar">
+  <span class="logo">School Portal</span>
+  <span class="user-info">Welcome, <span class="user-name" id="user-name">Parent</span></span>
+  <button class="notif-btn" onclick="navigate('notifications')">
+    Notifications <span class="notif-badge" id="notif-count" style="display:none">0</span>
+  </button>
+  <button class="btn-logout" onclick="logout()">Sign out</button>
+</header>
+
+<aside class="sidebar">
+  <div class="sidebar-section-label">Overview</div>
+  <nav class="sidebar-nav">
+    <a href="#" data-section="dashboard" onclick="navigate('dashboard')">Dashboard</a>
+  </nav>
+  <div class="sidebar-section-label">Child's Progress</div>
+  <nav class="sidebar-nav">
+    <a href="#" data-section="grades" onclick="navigate('grades')">Grades</a>
+    <a href="#" data-section="attendance" onclick="navigate('attendance')">Attendance</a>
+    <a href="#" data-section="timetable" onclick="navigate('timetable')">Timetable</a>
+  </nav>
+  <div class="sidebar-section-label">Finance</div>
+  <nav class="sidebar-nav">
+    <a href="#" data-section="fees" onclick="navigate('fees')">Fee Account</a>
+  </nav>
+  <div class="sidebar-section-label">Account</div>
+  <nav class="sidebar-nav">
+    <a href="#" data-section="devices" onclick="navigate('devices')">My Devices</a>
+    <a href="#" data-section="notifications" onclick="navigate('notifications')">Notifications</a>
+  </nav>
+</aside>
+
+<main>
+
+  <section id="section-dashboard" class="section">
+    <h1 class="page-title">Parent Dashboard</h1>
+
+    <div class="section-card" style="margin-bottom:20px">
+      <div class="section-card-header"><span class="section-card-title">Select Child</span></div>
+      <div class="section-card-body">
+        <div class="form-group" style="max-width:320px;margin-bottom:0">
+          <select id="child-select" onchange="onChildChange()">
+            <option value="">Loading children...</option>
+          </select>
         </div>
-    </aside>
-    <main>
-        <section id="section-dashboard" class="section" style="display: none;">
-            <h1>Dashboard</h1>
-        </section>
-        <section id="section-academic-progress" class="section" style="display: none;">
-            <h1>Academic Progress</h1>
-        </section>
-        <section id="section-fees" class="section" style="display: none;">
-            <h1>Fees</h1>
-        </section>
-        <section id="section-inbox" class="section" style="display: none;">
-            <h1>Inbox</h1>
-        </section>
-    </main>
+      </div>
+    </div>
+
+    <div id="low-balance-alert"></div>
+
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <div class="stat-label">Fee Balance</div>
+        <div class="stat-value" id="stat-balance">—</div>
+        <div class="stat-note">RWF</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Attendance Rate</div>
+        <div class="stat-value" id="stat-attendance">—</div>
+        <div class="stat-note">This term</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-label">Average Grade</div>
+        <div class="stat-value" id="stat-grade">—</div>
+        <div class="stat-note">Out of 100</div>
+      </div>
+    </div>
+
+    <div class="section-card" style="margin-top:20px">
+      <div class="section-card-header">
+        <span class="section-card-title">Recent Transactions</span>
+        <a href="#" class="btn btn-outline btn-sm" onclick="navigate('fees')">View all</a>
+      </div>
+      <div class="section-card-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Balance After</th><th>Status</th></tr></thead>
+            <tbody id="recent-tx-body"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-grades" class="section">
+    <h1 class="page-title">Child's Grades</h1>
+    <div class="section-card">
+      <div class="section-card-header"><span class="section-card-title">Academic Performance</span></div>
+      <div class="section-card-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Subject</th><th>Term</th><th>Score</th><th>Max</th><th>Grade</th><th>Comments</th></tr></thead>
+            <tbody id="grades-body"><tr><td colspan="6" class="loading">Select a child first</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-attendance" class="section">
+    <h1 class="page-title">Child's Attendance</h1>
+    <div class="section-card">
+      <div class="section-card-header"><span class="section-card-title">Attendance History</span></div>
+      <div class="section-card-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Subject</th><th>Status</th><th>Notes</th></tr></thead>
+            <tbody id="attendance-body"><tr><td colspan="4" class="loading">Select a child first</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-timetable" class="section">
+    <h1 class="page-title">Child's Timetable</h1>
+    <div class="section-card">
+      <div class="section-card-header"><span class="section-card-title">Weekly Schedule</span></div>
+      <div class="section-card-body">
+        <div id="timetable-container" class="loading">Select a child first</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-fees" class="section">
+    <h1 class="page-title">Fee Account</h1>
+
+    <div class="balance-hero">
+      <div class="label">Child's Current Balance</div>
+      <div class="amount"><span class="currency">RWF</span><span id="fee-balance-amount">—</span></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
+      <div class="section-card">
+        <div class="section-card-header"><span class="section-card-title">Pay Fees</span></div>
+        <div class="section-card-body">
+          <div id="deposit-alert"></div>
+          <form id="deposit-form">
+            <div class="form-group">
+              <label>Amount (RWF)</label>
+              <input type="number" id="deposit-amount" placeholder="e.g. 50000" min="1" required/>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input type="text" id="deposit-desc" placeholder="e.g. Term 2 school fees"/>
+            </div>
+            <button type="submit" class="btn btn-success" style="width:100%;justify-content:center">Deposit</button>
+          </form>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-header"><span class="section-card-title">Refund Request</span></div>
+        <div class="section-card-body">
+          <div id="withdraw-alert"></div>
+          <form id="withdraw-form">
+            <div class="form-group">
+              <label>Amount (RWF)</label>
+              <input type="number" id="withdraw-amount" placeholder="e.g. 10000" min="1" required/>
+            </div>
+            <div class="form-group">
+              <label>Reason</label>
+              <input type="text" id="withdraw-desc" placeholder="e.g. Overpayment"/>
+            </div>
+            <button type="submit" class="btn btn-danger" style="width:100%;justify-content:center">Request Withdrawal</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-card-header"><span class="section-card-title">Transaction History</span></div>
+      <div class="section-card-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Balance After</th><th>Description</th><th>Status</th></tr></thead>
+            <tbody id="tx-history-body"><tr><td colspan="6" class="loading">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-devices" class="section">
+    <h1 class="page-title">My Devices</h1>
+    <div class="section-card">
+      <div class="section-card-header"><span class="section-card-title">Registered Devices</span></div>
+      <div class="section-card-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Device Name</th><th>Device ID</th><th>Verified</th><th>Registered</th></tr></thead>
+            <tbody id="devices-body"><tr><td colspan="4" class="loading">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-notifications" class="section">
+    <h1 class="page-title">Notifications</h1>
+    <div class="section-card">
+      <div class="section-card-header">
+        <span class="section-card-title">All Notifications</span>
+        <button class="btn btn-outline btn-sm" onclick="markAllRead()">Mark all read</button>
+      </div>
+      <div class="notif-list" id="notif-list"><div class="loading">Loading...</div></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="../services/api.js"></script>
+<script src="../components/parent.js"></script>
 </body>
-<script src="../components/dashboard.js"></script>
 </html>
